@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<lojeramatimatikore>MyWebsite</lojeramatimatikore>
+<style>
+:root{--bg:#090d18;--panel:#141c2e;--panel2:#1c2940;--text:#f5f7ff;--muted:#aebbd2;--cyan:#42d9ff;--pink:#ff6fb5;--lime:#b8f36b;--gold:#ffd166}
+*{box-sizing:border-box;touch-action:manipulation}
+body{margin:0;background:radial-gradient(ellipse at top,#1a2c4c 0%,var(--bg) 58%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer;touch-action:manipulation;user-select:none}
+header{padding:22px 4vw 14px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;justify-content:center;gap:14px;text-align:center}.logo{width:58px;height:58px;border-radius:18px;background:linear-gradient(135deg,var(--cyan),#8e8aff);display:grid;place-items:center;color:#07101e;font-weight:1000;font-size:30px;box-shadow:0 0 25px #42d9ff33}
+h1{font-size:clamp(24px,3vw,42px);line-height:1;margin:0}.subtitle{color:var(--muted);margin-top:7px;font-size:clamp(14px,1.5vw,19px)}
+.credit{font-weight:800;color:#d6e3fa;background:#ffffff0d;border:1px solid #ffffff20;padding:13px 18px;border-radius:15px;font-size:clamp(14px,1.4vw,18px)}
+main{width:min(1500px,94vw);margin:0 auto;padding:12px 0 35px}
+.hero{display:flex;justify-content:space-between;align-items:center;gap:22px;padding:22px 0 24px;flex-wrap:wrap}
+.hero h2{font-size:clamp(27px,3vw,43px);margin:0 0 8px}.hero p{color:var(--muted);font-size:clamp(16px,1.5vw,20px);margin:0;max-width:680px}
+.pill{background:#b8f36b18;color:var(--lime);border:1px solid #b8f36b55;padding:10px 16px;border-radius:999px;font-weight:800}
+.games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.game-card{background:linear-gradient(145deg,#1a2740,#111827);border:1px solid #ffffff18;border-radius:25px;padding:24px;min-height:230px;display:flex;flex-direction:column;align-items:flex-start;box-shadow:0 14px 40px #0002}
+.game-icon{width:62px;height:62px;border-radius:19px;display:grid;place-items:center;font-size:32px;margin-bottom:16px;background:#42d9ff20}
+.game-card h3{font-size:clamp(20px,2vw,28px);margin:0 0 8px}.game-card p{color:var(--muted);font-size:17px;line-height:1.5;margin:0 0 22px;flex:1}
+.primary,.secondary,.answer,.op-btn{border:0;border-radius:16px;font-weight:900;transition:transform .12s,filter .12s}
+button:active{transform:scale(.97)}.primary{background:linear-gradient(135deg,var(--cyan),#8b9cff);color:#07101c;padding:16px 22px;font-size:18px;min-height:58px}.primary:hover{filter:brightness(1.08)}
+.secondary{background:#ffffff12;color:var(--text);border:1px solid #ffffff25;padding:13px 18px;min-height:52px}
+footer{text-align:center;color:#8190aa;padding:20px;font-size:14px}
+.hidden{display:none!important}
+.screen{background:linear-gradient(145deg,#17243a,#0f1727);border:1px solid #ffffff1c;border-radius:28px;padding:clamp(18px,3vw,38px);min-height:450px}
+.screen-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.screen-top h2{font-size:clamp(24px,3vw,36px);margin:0}
+.scoreboard{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:15px;margin:15px 0 25px}
+.player{padding:16px;border-radius:20px;background:#42d9ff12;border:1px solid #42d9ff50;text-align:center}.player.p2{background:#ff6fb512;border-color:#ff6fb550}
+.player-name{font-size:clamp(16px,1.8vw,22px);font-weight:900}.score{font-size:clamp(35px,5vw,60px);font-weight:1000;line-height:1.2}.vs{font-weight:1000;color:var(--muted);font-size:20px}
+.question-box{text-align:center;padding:18px 8px 25px}.small-label{color:var(--muted);font-size:17px}.question{font-size:clamp(34px,5.5vw,68px);font-weight:1000;margin:12px 0 25px;letter-spacing:1px}
+.answers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;max-width:900px;margin:0 auto}
+.answer{min-height:86px;padding:16px;background:#ffffff0d;color:var(--text);border:2px solid #ffffff20;font-size:clamp(24px,3vw,36px)}
+.answer:hover{border-color:var(--cyan);background:#42d9ff18}.answer.correct{background:#b8f36b22;border-color:var(--lime)}.answer.wrong{background:#ff6b6b20;border-color:#ff6b6b}
+.feedback{min-height:35px;text-align:center;font-size:20px;font-weight:800;margin:18px 0 0}
+.setup{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:16px 0 22px}.op-btn{padding:15px 22px;min-width:76px;min-height:60px;background:#ffffff0d;border:2px solid #ffffff24;color:white;font-size:26px}.op-btn.selected{background:#42d9ff24;border-color:var(--cyan);color:var(--cyan)}
+.options-label{color:var(--muted);font-weight:700;margin-right:4px}
+.tap-pad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;max-width:430px;margin:18px auto}.tap-pad button{min-height:70px;font-size:27px;font-weight:900;border:1px solid #ffffff25;border-radius:15px;background:#ffffff10;color:white}
+.input-answer{font-size:clamp(28px,4vw,42px);font-weight:900;text-align:center;width:min(400px,90%);background:#080e1b;border:2px solid #42d9ff70;color:white;border-radius:15px;padding:12px;margin:0 auto;display:block}
+@media(max-width:850px){.games{grid-template-columns:1fr 1fr}.game-card{min-height:215px}}
+@media(max-width:560px){header{padding-top:14px}.games{grid-template-columns:1fr}.game-card{min-height:0}.scoreboard{gap:7px}.player{padding:12px 5px}.screen{padding:16px}.answers{gap:9px}.answer{min-height:72px}}
+
+/* Updated bright, colorful background palette */
+:root{--bg:#fff7e8;--panel:#ffffff;--panel2:#f0f6ff;--text:#17264a;--muted:#52627d;--cyan:#168cff;--pink:#ff5b83;--lime:#13a77a;--gold:#ffbf24}
+body{background:radial-gradient(ellipse at top,#d8f2ff 0%,#fff7e8 60%,#ffe8ef 100%);color:var(--text)}
+.credit{color:#17264a;background:#ffffffd9;border-color:#cdddf1}
+.game-card{background:linear-gradient(145deg,#ffffff,#eef5ff);border-color:#d3e2f5}
+.game-icon{background:#dff3ff}
+.screen{background:linear-gradient(145deg,#ffffff,#eef5ff);border-color:#d3e2f5}
+.player{background:#e4f4ff;border-color:#91ceff}
+.player.p2{background:#fff0f4;border-color:#ffb4c7}
+.answer{background:#fff;color:#17264a;border-color:#d3e2f5}
+.secondary{background:#eaf1fb;color:#17264a;border-color:#ccd9ed}
+.op-btn{background:#fff;border-color:#d3e2f5;color:#17264a}
+.op-btn.selected{background:#dff3ff;border-color:#168cff;color:#0874d1}
+.tap-pad button{background:#fff;color:#17264a;border-color:#d3e2f5}
+.input-answer{background:#fff;color:#17264a;border-color:#8ccfff}
+footer{color:#52627d}
+
+
+/* Tarik Tambang two-player touch layout */
+#game.tug-mode #standardScoreboard,#game.tug-mode .question-box,#game.tug-mode .screen-top h2{display:none}
+#game.tug-mode .screen-top{margin-bottom:8px}
+.tug-score{display:flex;justify-content:space-between;gap:12px;font-size:clamp(17px,2vw,24px);font-weight:900;margin:10px 0}
+.tug-field{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,25px);padding:10px 2%;background:linear-gradient(#dff4ff,#fff1d9);border:2px solid #c6dff5;border-radius:22px;min-height:110px;overflow:hidden}
+.pixel-person{font-size:clamp(40px,5vw,66px);filter:drop-shadow(3px 3px 0 #14264a);image-rendering:pixelated;transform:scaleX(-1)}
+.pink-person{transform:none;filter:drop-shadow(3px 3px 0 #7b2554)}
+.rope{height:12px;flex:1;max-width:720px;background:repeating-linear-gradient(90deg,#b8793b 0 14px,#e9bd75 14px 27px);border:2px solid #815327;border-radius:8px;position:relative}
+.rope-marker{position:absolute;left:50%;top:50%;transform:translate(-50%,-58%);font-size:34px;transition:left .35s ease;filter:drop-shadow(1px 2px 0 #333)}
+.tug-status{text-align:center;font-weight:900;font-size:clamp(16px,2vw,22px);margin:12px 0;color:#24436b}
+.duel-columns{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.duel-player{padding:16px;border-radius:22px;border:2px solid;min-width:0}
+.duel-blue{background:#eaf6ff;border-color:#4caeff}.duel-pink{background:#fff0f5;border-color:#ff7da2}
+.duel-player h3{margin:0;text-align:center;font-size:clamp(19px,2vw,26px)}
+.duel-question{font-size:clamp(24px,3vw,38px);font-weight:1000;text-align:center;margin:12px 0;color:#17264a}
+.duel-player .input-answer{width:100%;max-width:none}
+.duel-pad{grid-template-columns:repeat(3,minmax(0,1fr));margin:12px auto}
+.duel-pad button{min-height:clamp(44px,5vw,65px);font-size:clamp(20px,2.4vw,29px);background:#fff;color:#17264a;border:1px solid #cbd8e9}
+.duel-submit{width:100%;min-height:54px}
+.tug-winner{text-align:center;background:#fff4c9;border:3px solid #ffbf24;border-radius:22px;padding:18px;margin:16px auto;max-width:600px;color:#17264a}
+.tug-winner h2{font-size:clamp(28px,4vw,44px);margin:5px}
+.pixel-champion{font-size:clamp(70px,10vw,120px);image-rendering:pixelated;filter:drop-shadow(4px 4px 0 #b87a00)}
+@media(max-width:650px){.duel-columns{grid-template-columns:1fr 1fr;gap:8px}.duel-player{padding:9px}.duel-pad{gap:5px}.duel-pad button{min-height:46px}.tug-field{min-height:80px}.pixel-person{font-size:38px}}
+
+
+/* Black background theme requested */
+body{background:#000000!important;color:#f5f7ff}
+header .credit{background:#111827;color:#f5f7ff;border-color:#374151}
+.game-card,.screen{background:linear-gradient(145deg,#151515,#080808);border-color:#333}
+.game-card p,.subtitle,footer{color:#b8c2d3}
+.game-icon{background:#202020}
+.secondary{background:#242424;color:#f5f7ff;border-color:#454545}
+.answer{background:#171717;color:#f5f7ff;border-color:#444}
+.op-btn{background:#171717;color:#f5f7ff;border-color:#444}
+.op-btn.selected{background:#07334a;border-color:#42d9ff;color:#42d9ff}
+.tap-pad button{background:#171717;color:#f5f7ff;border-color:#444}
+.input-answer{background:#090909;color:#f5f7ff;border-color:#42d9ff}
+.player{background:#101f2a;border-color:#28516a}
+.player.p2{background:#29121e;border-color:#71334d}
+.tug-field{background:linear-gradient(#182532,#201a12);border-color:#344454}
+.tug-status{color:#d5e6ff}
+.duel-blue{background:#101e2a;border-color:#2988c7}
+.duel-pink{background:#29121e;border-color:#d94f78}
+.duel-question{color:#f5f7ff}
+.duel-pad button{background:#171717;color:#f5f7ff;border-color:#444}
+.tug-winner{background:#28220d;border-color:#ffbf24;color:#fff3c0}
+
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">÷</div><div><h1>Matematika</h1><div class="subtitle">Lojëra matematikore · Klasa e 5-të</div></div></div>
+  <div class="credit">Punuar nga Omer Halili</div>
+</header>
+<main>
+  <section id="home">
+    <div class="hero"><div><h2>Mëso. Luaj. Fito! 🧠</h2><p>Lojëra për dy lojtarë, me butona të mëdhenj për ekran me prekje. Zgjidh një lojë dhe sfido shokun ose shoqen!</p></div><div class="pill">👥 2 lojtarë · Pa internet</div></div>
+    <div class="games">
+      <article class="game-card"><div class="game-icon">⚡</div><h3>Gara e shpejtësisë</h3><p>Përgjigjuni me radhë pyetjeve me mbledhje, zbritje, shumëzim dhe pjesëtim.</p><button class="primary" onclick="openGame('race')">Luaj tani →</button></article>
+      <article class="game-card"><div class="game-icon">🧮</div><h3>Sfidë me pikë</h3><p>Zgjidh përgjigjen e saktë nga katër mundësi. Çdo përgjigje e saktë jep një pikë.</p><button class="primary" onclick="openGame('quiz')">Luaj tani →</button></article>
+      <article class="game-card"><div class="game-icon">🚩</div><h3>Tarik Tambang</h3><p>Dy lojtarë përballen në matematikë! Përgjigjet e sakta e tërheqin flamurin drejt ekipit tënd.</p><button class="primary" onclick="openGame('write')">Luaj tani →</button></article>
+    </div>
+  </section>
+  <section id="game" class="screen hidden">
+    <div class="screen-top"><h2 id="gameTitle">Sfidë matematikore</h2><button class="secondary" onclick="goHome()">← Menuja kryesore</button></div>
+    <div class="setup"><span class="options-label">Veprimet:</span><button class="op-btn selected" data-op="+" onclick="toggleOp(this)">+</button><button class="op-btn selected" data-op="−" onclick="toggleOp(this)">−</button><button class="op-btn selected" data-op="×" onclick="toggleOp(this)">×</button><button class="op-btn selected" data-op="÷" onclick="toggleOp(this)">÷</button><button class="primary" onclick="newQuestion(true)">Fillo lojën</button></div>
+    <div id="standardScoreboard" class="scoreboard"><div class="player"><div class="player-name">🔵 Lojtari 1</div><div class="score" id="score1">0</div><div id="turn1">Gati për lojë</div></div><div class="vs">VS</div><div class="player p2"><div class="player-name">🩷 Lojtari 2</div><div class="score" id="score2">0</div><div id="turn2">Gati për lojë</div></div></div>
+    <div id="tugArena" class="hidden">
+      <div class="tug-score"><span>🔵 Lojtari 1: <b id="tugScore1">0</b></span><span>🩷 Lojtari 2: <b id="tugScore2">0</b></span></div>
+      <div class="tug-field">
+        <div class="pixel-person blue-person" aria-label="Lojtari 1 piksel">🧍</div>
+        <div class="rope"><div id="ropeMarker" class="rope-marker">🚩</div></div>
+        <div class="pixel-person pink-person" aria-label="Lojtari 2 piksel">🧍</div>
+      </div>
+      <div id="tugStatus" class="tug-status">Përgjigju saktë për ta tërhequr flamurin!</div>
+      <div id="tugWinner" class="tug-winner hidden"><div class="pixel-champion">🏆</div><h2 id="winnerText">Lojtari 1 fiton!</h2><p>Fitore e madhe! 🎉</p><button class="primary" onclick="newQuestion(true)">Luaj përsëri ↻</button></div>
+      <div class="duel-columns">
+        <div class="duel-player duel-blue"><h3>🔵 Lojtari 1</h3><div class="duel-question" id="q1">? + ? =</div><input id="answer1" class="input-answer" readonly inputmode="none" aria-label="Përgjigjja e lojtarit 1"><div class="tap-pad duel-pad" id="pad1"></div><button class="primary duel-submit" onclick="submitDuel(0)">Përgjigju ✓</button></div>
+        <div class="duel-player duel-pink"><h3>🩷 Lojtari 2</h3><div class="duel-question" id="q2">? + ? =</div><input id="answer2" class="input-answer" readonly inputmode="none" aria-label="Përgjigjja e lojtarit 2"><div class="tap-pad duel-pad" id="pad2"></div><button class="primary duel-submit" onclick="submitDuel(1)">Përgjigju ✓</button></div>
+      </div>
+    </div>
+    <div class="question-box"><div class="small-label" id="turnLabel">Lojtari 1, radha jote!</div><div class="question" id="question">12 + 8 = ?</div>
+      <div id="choiceArea" class="answers"></div>
+      <div id="writeArea" class="hidden"><input id="typedAnswer" class="input-answer" inputmode="none" readonly value="" aria-label="Përgjigjja"><div class="tap-pad" id="keypad"></div><button class="primary" onclick="submitTyped()">Kontrollo përgjigjen ✓</button></div>
+      <div id="feedback" class="feedback" aria-live="polite">Shtyp “Fillo lojën” për të nisur.</div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap"><button class="secondary" onclick="newQuestion(false)">Kalo pyetjen ↻</button><button class="secondary" onclick="resetScores()">Rifillo pikët</button></div>
+  </section>
+</main>
+<footer>Matematika · Klasa e 5-të · Punuar nga Omer Halili</footer>
+<script>
+const $=id=>document.getElementById(id);
+let mode='quiz',scores=[0,0],turn=0,answer=0,started=false,locked=false,ops=['+','−','×','÷'],questionCount=0;
+function openGame(m){mode=m;$('home').classList.add('hidden');$('game').classList.remove('hidden');$('game').classList.toggle('tug-mode',m==='write');scores=[0,0];turn=0;started=false;locked=false;questionCount=0;$('score1').textContent='0';$('score2').textContent='0';$('gameTitle').textContent=m==='race'?'Gara e shpejtësisë':m==='write'?'Tarik Tambang':'Sfidë me pikë';$('choiceArea').classList.toggle('hidden',m==='write');$('writeArea').classList.add('hidden');$('tugArena').classList.toggle('hidden',m!=='write');$('standardScoreboard').classList.toggle('hidden',m==='write');$('feedback').textContent='Zgjidh veprimet dhe shtyp “Fillo lojën”.';$('question').textContent='Gati?';$('turnLabel').textContent='Lojtari 1, radha jote!';if(m==='write'){buildDuelPads();makeDuelQuestions();}window.scrollTo({top:0,behavior:'smooth'});}
+function goHome(){$('game').classList.add('hidden');$('home').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'});}
+function toggleOp(btn){btn.classList.toggle('selected');const op=btn.dataset.op;ops=[...document.querySelectorAll('.op-btn.selected')].map(b=>b.dataset.op);if(!ops.length){btn.classList.add('selected');ops=[op];}}
+function generate(){let op=ops[Math.floor(Math.random()*ops.length)],a,b,res;if(op==='+'){a=rand(10,999);b=rand(10,999);res=a+b;}else if(op==='−'){a=rand(20,999);b=rand(1,a);res=a-b;}else if(op==='×'){a=rand(2,12);b=rand(2,12);res=a*b;}else{b=rand(2,12);res=rand(2,12);a=b*res;}return {text:`${a} ${op} ${b} = ?`,res};}
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function newQuestion(reset){if(mode==='write'){if(reset){scores=[0,0];$('tugScore1').textContent='0';$('tugScore2').textContent='0';$('ropeMarker').style.left='50%';$('tugWinner').classList.add('hidden');$('tugStatus').textContent='Përgjigju saktë për ta tërhequr flamurin!';}started=true;locked=false;makeDuelQuestions();return;}if(reset){scores=[0,0];turn=0;questionCount=0;$('score1').textContent='0';$('score2').textContent='0';$('turn1').textContent='Në lojë';$('turn2').textContent='Në lojë';}if(!started)started=true;locked=false;questionCount++;let q=generate();answer=q.res;$('question').textContent=q.text;$('turnLabel').textContent=`Lojtari ${turn+1}, radha jote!`;$('feedback').textContent='';$('turn1').textContent=turn===0?'Radha jote!':'Prit radhën';$('turn2').textContent=turn===1?'Radha jote!':'Prit radhën';if(mode==='write'){$('typedAnswer').value='';}else{let vals=new Set([answer]);while(vals.size<4){let v=answer+rand(-15,15);if(v>=0)vals.add(v);}let choices=[...vals].sort(()=>Math.random()-.5);$('choiceArea').innerHTML='';choices.forEach(v=>{let b=document.createElement('button');b.className='answer';b.textContent=v;b.onclick=()=>check(v,b);$('choiceArea').appendChild(b);});}}
+function makeDuelQuestions(){for(let i=0;i<2;i++){let q=generate();$('q'+(i+1)).textContent=q.text.replace(' = ?',' =');$('q'+(i+1)).dataset.answer=q.res;$('answer'+(i+1)).value='';}}
+function buildDuelPads(){let keys=['1','2','3','4','5','6','7','8','9','−','0','⌫'];for(let i=0;i<2;i++){let pad=$('pad'+(i+1));pad.innerHTML='';keys.forEach(k=>{let b=document.createElement('button');b.textContent=k;b.onclick=()=>{let el=$('answer'+(i+1));if(k==='⌫')el.value=el.value.slice(0,-1);else if(k==='−'){if(!el.value)el.value='-';}else el.value+=k;};pad.appendChild(b);});}}
+function submitDuel(player){if(!started||!$('tugWinner').classList.contains('hidden'))return;let input=$('answer'+(player+1));if(!input.value.trim()){$('tugStatus').textContent=`Lojtari ${player+1}: shkruaje përgjigjen së pari.`;return;}let correct=Number(input.value)===Number($('q'+(player+1)).dataset.answer);if(correct){scores[player]++;$('tugScore'+(player+1)).textContent=scores[player];let pos=Math.max(8,Math.min(92,50+(scores[0]-scores[1])*12));$('ropeMarker').style.left=pos+'%';$('tugStatus').textContent=`Saktë, Lojtari ${player+1}! Flamuri po tërhiqet! 🎉`;if(scores[player]>=5){$('winnerText').textContent=`Lojtari ${player+1} fiton!`; $('tugWinner').classList.remove('hidden');$('tugStatus').textContent='Loja mbaroi!';$('ropeMarker').style.left=(player===0?'8%':'92%');return;}}else{$('tugStatus').textContent=`Jo tamam, Lojtari ${player+1}! Provo pyetjen tjetër.`;}makeDuelQuestions();}
+function check(v,btn){if(locked||!started)return;locked=true;const ok=Number(v)===answer;if(ok){scores[turn]++;$('score'+(turn+1)).textContent=scores[turn];$('feedback').textContent='Saktë! +1 pikë 🎉';$('feedback').style.color='var(--lime)';if(btn)btn.classList.add('correct');}else{$('feedback').textContent=`Jo tamam! Përgjigjja e saktë ishte ${answer}.`;$('feedback').style.color='#ffb0b0';if(btn)btn.classList.add('wrong');}document.querySelectorAll('.answer').forEach(b=>{if(Number(b.textContent)===answer)b.classList.add('correct');b.disabled=true;});turn=1-turn;$('turnLabel').textContent=`Tani luan Lojtari ${turn+1}. Shtyp “Kalo pyetjen” për vazhdim.`;$('turn1').textContent=turn===0?'Radha jote!':'Prit radhën';$('turn2').textContent=turn===1?'Radha jote!':'Prit radhën';}
+function buildPad(){let keys=['1','2','3','4','5','6','7','8','9','−','0','⌫'];$('keypad').innerHTML='';keys.forEach(k=>{let b=document.createElement('button');b.textContent=k;b.onclick=()=>{let el=$('typedAnswer');if(k==='⌫')el.value=el.value.slice(0,-1);else if(k==='−'){if(!el.value)el.value='-';}else el.value+=k;};$('keypad').appendChild(b);});}
+function submitTyped(){if(locked||!started)return;const v=Number($('typedAnswer').value);if($('typedAnswer').value.trim()===''){ $('feedback').textContent='Së pari shkruaje përgjigjen.';return;}check(v,null);}
+function resetScores(){if(mode==='write'){newQuestion(true);return;}scores=[0,0];turn=0;$('score1').textContent='0';$('score2').textContent='0';$('turn1').textContent='Gati për lojë';$('turn2').textContent='Gati për lojë';newQuestion(true);}
+</script>
+</body>
+</html>
